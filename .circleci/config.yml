@@ -27,6 +27,8 @@ jobs:
               echo 'export IMAGE_TAG=latest' >> $BASH_ENV
             else [ "${CIRCLE_BRANCH}" == "dev" ]; then
               echo 'export IMAGE_TAG=dev' >> $BASH_ENV
+            else
+              echo 'export IMAGE_TAG=other' >> $BASH_ENV
             fi
       - run:
           name: Build Docker Image
