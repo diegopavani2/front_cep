@@ -19,11 +19,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Docker
-          command: |
-            apt-get update
-            apt-get install -y docker.io
-      - run:
           name: Docker Login
           command: |
             echo "$DOCKERHUB_PASSWORD" | sudo docker login --username "$DOCKERHUB_LOGIN" --password-stdin
