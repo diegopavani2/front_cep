@@ -14,7 +14,8 @@ jobs:
   build_docker_image:
     build:
     docker:
-      - image: cimg/deploy:2023.12
+      - image: cimg/deploy:2023.12.1-node
+    resource_class: diegopavani2/ubunturesource
     steps:
       - checkout
       - run:
