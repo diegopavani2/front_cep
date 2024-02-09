@@ -17,7 +17,6 @@ jobs:
       - image: cimg/deploy:2023.12.1-node # Imagem Docker a ser usada para rodar o job
     steps:
       - checkout # Checa o código fonte para este job
-      - docker/check # Usa o orb 'docker' para verificar se está logado no Docker
       - run:
           name: Docker Login
           command: |
