@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  docker: circleci/docker@1.4.0
-
 workflows:
   build-and-test:
     jobs:
@@ -13,10 +10,10 @@ workflows:
 
 jobs:
   build_docker_image:
-    docker:
-      - image: cimg/deploy:2023.12.1-node # Imagem Docker a ser usada para rodar o job
+    machine: # Use um ambiente de máquina que tem o Docker Daemon rodando
+      enabled: true
     steps:
-      - checkout # Checa o código fonte para este job
+      - checkout
       - run:
           name: Docker Login
           command: |
