@@ -15,6 +15,9 @@ jobs:
     resource_class: diegopavani2/ubunturesource
     steps:
       - checkout
+      - docker/check:
+          docker-username: DOCKERHUB_LOGIN
+          docker-password: DOCKERHUB_PASSWORD
       - run:
           name: Install Docker
           command: |
