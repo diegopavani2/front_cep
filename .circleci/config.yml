@@ -18,19 +18,19 @@ jobs:
     resource_class: diegopavani2/ubunturesource
     steps:
       - checkout
-      - docker/check:
-          docker-username: DOCKERHUB_LOGIN
-          docker-password: DOCKERHUB_PASSWORD
       - run:
           name: Install Docker
           command: |
             sudo apt-get update
             sudo apt-get install -y docker.io
+      - docker/login:
+          username: DOCKERHUB_LOGIN
+          password: DOCKERHUB_PASSWORD
       - run:
           name: Build Docker Image
           command: |
-            sudo docker build -t  diegopavani2/mega-frontend-ceps:latest .
+            sudo docker build -t diegopavani2/mega-frontend-ceps:latest .
       - run:
-          name: Push docker image
+          name: Push Docker Image
           command: |
             sudo docker push diegopavani2/mega-frontend-ceps:latest
