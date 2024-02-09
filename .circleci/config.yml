@@ -6,11 +6,13 @@ workflows:
       - build_docker_image:
           filters:
             branches:
-              only: main
+              only:
+                - main
+                - dev
 
 jobs:
   build_docker_image:
-    machine: # Use um ambiente de máquina que tem o Docker Daemon rodando
+    machine:
       enabled: true
     steps:
       - checkout
@@ -19,10 +21,18 @@ jobs:
           command: |
             echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_LOGIN" --password-stdin
       - run:
+          name: Determine Docker Image Tag
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
+              echo 'export IMAGE_TAG=latest' >> $BASH_ENV
+            else [ "${CIRCLE_BRANCH}" == "dev" ]; then
+              echo 'export IMAGE_TAG=dev' >> $BASH_ENV
+            fi
+      - run:
           name: Build Docker Image
           command: |
-            docker build -t diegopavani2/mega-frontend-ceps:latest .
+            docker build -t diegopavani2/mega-frontend-ceps:${IMAGE_TAG} .
       - run:
           name: Push Docker Image
           command: |
-            docker push diegopavani2/mega-frontend-ceps:latest
+            docker push diegopavani2/mega-frontend-ceps:${IMAGE_TAG}
