@@ -14,6 +14,7 @@ jobs:
   build_docker_image:
     machine:
       enabled: true
+      image: cimg/deploy:2023.12
     resource_class: diegopavani2/ubunturesource
     steps:
       - checkout
