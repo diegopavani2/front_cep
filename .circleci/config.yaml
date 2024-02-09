@@ -1,0 +1,30 @@
+version: 2.1
+
+workflows:
+  build-and-test:
+    jobs:
+      - build_docker_image:
+          filters:
+            branches:
+              only: main
+
+jobs:
+  build_docker_image:
+    machine:
+      enabled: true
+    resource_class: diegopavani2/ubunturesource
+    steps:
+      - checkout
+      - run:
+          name: Install Docker
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y docker.io
+      - run:
+          name: Build Docker Image
+          command: |
+            sudo docker build -t  diegopavani2/mega-frontend-ceps:latest .
+      - run:
+          name: Push docker image
+          command: |
+            sudo docker push diegopavani2/mega-frontend-ceps:latest
