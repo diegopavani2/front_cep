@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Docker Login
           command: |
-            echo "$DOCKERHUB_PASSWORD" | sudo docker login --username "$DOCKERHUB_LOGIN" --password-stdin
+            echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_LOGIN" --password-stdin
       - run:
           name: Build Docker Image
           command: |
