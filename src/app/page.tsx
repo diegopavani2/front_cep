@@ -2,6 +2,7 @@ import { BuscaCepForm } from "@/components/buscaCepForm/buscaCepForm";
 import { Fragment, useState } from "react";
 
 export default function Home() {
+  console.log("carregando site");
   return (
     <>
       <header>
