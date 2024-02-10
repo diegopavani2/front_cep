@@ -2,7 +2,6 @@ import { BuscaCepForm } from "@/components/buscaCepForm/buscaCepForm";
 import { Header } from "@/components/header/header";
 
 export default function Home() {
-  console.log("carregando site");
   return (
     <>
       <Header />
@@ -11,6 +10,9 @@ export default function Home() {
           className="w-full md:w-8/12 lg:w-6/12 p-4 shadow-lg"
           style={{ backgroundColor: "#1F2937" }}
         >
+          <h1>
+            Buscar por um cep, digite o cep abaixo para buscar o endereço!
+          </h1>
           <BuscaCepForm />
         </div>
       </div>

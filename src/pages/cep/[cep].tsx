@@ -8,7 +8,6 @@ import { FunctionComponent } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
-  console.log("params", params);
   const response = await fetch(`${process.env.API_LINK}/cep/${params?.cep}`);
   const post = await response.json();
 
@@ -67,9 +66,9 @@ const CepPage: FunctionComponent<CepPageProps> = ({ post, params }) => {
             <CepResult
               cep={post.cep}
               logradouro={post.logradouro}
-              bairro={post.bairro}
-              cidade={post.cidade}
-              estado={post.estado}
+              bairro={post.bairro?.nome}
+              cidade={post.cidade?.nome}
+              estado={`${post.estado?.nome} - ${post.estado?.uf}`}
               latitude={post.latitude}
               longitude={post.longitude}
             />
