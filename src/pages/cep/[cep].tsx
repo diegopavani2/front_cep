@@ -4,6 +4,7 @@ import { CepResult } from "@/components/cepResult/cepResult";
 import { Header } from "@/components/header/header";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { FunctionComponent } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
@@ -18,8 +19,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
-
-const CepPage = ({ post, params }) => {
+interface CepPageProps {
+  post: any;
+  params: any;
+}
+const CepPage: FunctionComponent<CepPageProps> = ({ post, params }) => {
   const pageTitle = post.cep
     ? `Informações do CEP ${post.cep}`
     : "CEP não encontrado";
