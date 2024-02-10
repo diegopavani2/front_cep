@@ -7,13 +7,6 @@ import Head from "next/head";
 import { FunctionComponent } from "react";
 import mixpanel from "mixpanel-browser";
 
-mixpanel.init("3123dfec454ea69f5e65f6d8498b918a", {
-  debug: false,
-  track_pageview: true,
-  persistence: "localStorage",
-  ignore_dnt: true,
-});
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
   const response = await fetch(`${process.env.API_LINK}/cep/${params?.cep}`);
