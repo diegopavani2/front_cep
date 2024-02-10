@@ -5,6 +5,14 @@ import { Header } from "@/components/header/header";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { FunctionComponent } from "react";
+import mixpanel from "mixpanel-browser";
+
+mixpanel.init("3123dfec454ea69f5e65f6d8498b918a", {
+  debug: false,
+  track_pageview: true,
+  persistence: "localStorage",
+  ignore_dnt: true,
+});
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
@@ -29,6 +37,13 @@ const CepPage: FunctionComponent<CepPageProps> = ({ post, params }) => {
   const pageDescription = post.cep
     ? `Detalhes do CEP ${post.cep}: ${post.logradouro}, ${post.bairro}, ${post.cidade}, ${post.estado}.`
     : "A busca pelo CEP não retornou resultados.";
+
+  mixpanel.track("Cep Search", {
+    cep: post?.cep,
+    bairro: post.bairro?.nome,
+    cidade: post.cidade?.nome,
+    estado: post.estado?.uf,
+  });
 
   return (
     <>
