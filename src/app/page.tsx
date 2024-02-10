@@ -1,7 +1,9 @@
 import { BuscaCepForm } from "@/components/buscaCepForm/buscaCepForm";
 import { Header } from "@/components/header/header";
+import mixpanel from "mixpanel-browser";
 
 export default function Home() {
+  mixpanel.track("Page view", {});
   return (
     <>
       <Header />
