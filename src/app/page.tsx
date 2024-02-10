@@ -3,6 +3,13 @@ import { Header } from "@/components/header/header";
 import mixpanel from "mixpanel-browser";
 
 export default function Home() {
+  mixpanel.init("3123dfec454ea69f5e65f6d8498b918a", {
+    debug: false,
+    track_pageview: true,
+    persistence: "localStorage",
+    ignore_dnt: true,
+  });
+
   mixpanel.track("Page view", {});
   return (
     <>
