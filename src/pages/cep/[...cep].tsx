@@ -1,29 +1,40 @@
-import { BuscaCepForm } from "@/components/buscaCepForm/buscaCepForm";
-import { CepNotFound } from "@/components/cepNotFound/cepNotFound";
-import { CepResult } from "@/components/cepResult/cepResult";
-import { Header } from "@/components/header/header";
+// pages/cep/[...params].tsx
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { FunctionComponent } from "react";
 import mixpanel from "mixpanel-browser";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { params } = context;
-  const response = await fetch(`${process.env.API_LINK}/cep/${params?.cep}`);
+import { BuscaCepForm } from "@/components/buscaCepForm/buscaCepForm";
+import { CepNotFound } from "@/components/cepNotFound/cepNotFound";
+import { CepResult } from "@/components/cepResult/cepResult";
+import { Header } from "@/components/header/header";
+
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+  const cep = context.params?.cep[0];
+
+  if (!cep) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const response = await fetch(`${process.env.API_LINK}/cep/${cep}`);
   const post = await response.json();
 
   return {
     props: {
       post,
-      params,
+      cep,
     },
   };
 };
+
 interface CepPageProps {
   post: any;
-  params: any;
+  cep: string;
 }
-const CepPage: FunctionComponent<CepPageProps> = ({ post, params }) => {
+
+const CepPage: FunctionComponent<CepPageProps> = ({ post, cep }) => {
   const pageTitle = post.cep
     ? `Informações do CEP ${post.cep}`
     : "CEP não encontrado";
@@ -44,16 +55,13 @@ const CepPage: FunctionComponent<CepPageProps> = ({ post, params }) => {
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
         <meta name="robots" content="index, follow" />
-        <link
-          rel="canonical"
-          href={`https://buscadecep.com.br/cep/${params.cep}`}
-        />
+        <link rel="canonical" href={`https://buscadecep.com.br/cep/${cep}`} />
 
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta
           property="og:url"
-          content={`https://buscadecep.com.br/cep/${params.cep}`}
+          content={`https://buscadecep.com.br/cep/${cep}`}
         />
         <meta property="og:type" content="website" />
 
@@ -67,7 +75,7 @@ const CepPage: FunctionComponent<CepPageProps> = ({ post, params }) => {
           className="w-full md:w-8/12 lg:w-6/12 p-4 shadow-lg"
           style={{ backgroundColor: "#1F2937" }}
         >
-          <BuscaCepForm precep={params.cep} />
+          <BuscaCepForm precep={cep} />
           {!post.cep ? (
             <CepNotFound />
           ) : (
