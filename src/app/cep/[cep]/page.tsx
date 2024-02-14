@@ -22,7 +22,7 @@ export default async function New({ params }: CepProps) {
       Authorization: `Basic ${base64Credentials}`,
     },
     next: {
-      revalidate: 160,
+      revalidate: 2592000,
     },
   });
 
