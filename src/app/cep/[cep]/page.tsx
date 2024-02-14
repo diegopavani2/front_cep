@@ -16,7 +16,6 @@ export default async function New({ params }: CepProps) {
   const credentials = `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`;
   const base64Credentials = btoa(credentials);
 
-
   const response = await fetch(`${process.env.API_LINK}/cep/${params.cep}`, {
     headers: {
       Authorization: `Basic ${base64Credentials}`,
@@ -32,7 +31,7 @@ export default async function New({ params }: CepProps) {
     ? `Informações do CEP ${dataResponse.cep}`
     : "CEP não encontrado";
   const pageDescription = dataResponse.cep
-    ? `Detalhes do CEP ${dataResponse.cep}: ${dataResponse.logradouro}, ${dataResponse.bairro}, ${dataResponse.cidade}, ${dataResponse.estado}.`
+    ? `Detalhes do CEP ${dataResponse.cep}: ${dataResponse?.logradouro}, ${dataResponse?.bairro?.nome}, ${dataResponse?.cidade?.nome}, ${dataResponse?.estado?.nome}.`
     : "A busca pelo CEP não retornou resultados.";
 
   return (
