@@ -18,7 +18,15 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     };
   }
 
-  const response = await fetch(`${process.env.API_LINK}/cep/${cep}`);
+  const credentials = `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`;
+  const base64Credentials = btoa(credentials);
+
+  const response = await fetch(`${process.env.API_LINK}/cep/${cep}`, {
+    headers: {
+      Authorization: `Basic ${base64Credentials}`,
+    },
+  });
+  
   const post = await response.json();
 
   return {
