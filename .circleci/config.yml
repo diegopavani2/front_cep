@@ -31,7 +31,6 @@ jobs:
               echo 'export IMAGE_TAG=other' >> $BASH_ENV
             fi
             source $BASH_ENV
-
       - run:
           name: Build Docker Image
           command: |
