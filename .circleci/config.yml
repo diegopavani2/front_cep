@@ -9,6 +9,7 @@ workflows:
               only:
                 - main
                 - dev
+                - rollback
 
 jobs:
   build_docker_image:
