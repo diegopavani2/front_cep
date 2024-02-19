@@ -18,7 +18,17 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     };
   }
 
-  const response = await fetch(`${process.env.API_LINK}/cep/${cep}`);
+  const credentials = `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`;
+  const base64Credentials = btoa(credentials);
+
+  const response = await fetch(`${process.env.API_LINK}/cep/${cep}`, {
+    headers: {
+      Authorization: `Basic ${base64Credentials}`,
+    },
+    next: {
+      revalidate: 2592000,
+    },
+  });
   const post = await response.json();
 
   return {
@@ -38,9 +48,19 @@ const CepPage: FunctionComponent<CepPageProps> = ({ post, cep }) => {
   const pageTitle = post.cep
     ? `Informações do CEP ${post.cep}`
     : "CEP não encontrado";
-  const pageDescription = post.cep
-    ? `Detalhes do CEP ${post.cep}: ${post.logradouro}, ${post.bairro}, ${post.cidade}, ${post.estado}.`
-    : "A busca pelo CEP não retornou resultados.";
+  const pageDescriptionParts = [
+    post.cep && `Detalhes do CEP ${post.cep}`,
+    post.logradouro && `${post.tipoLogradouro} ${post.logradouro}`,
+    post.bairro?.nome && post.bairro.nome,
+    post.cidade?.nome && post.cidade.nome,
+    post.estado?.nome && post.estado?.nome,
+    post.estado?.uf && post.estado?.uf,
+  ].filter(Boolean);
+
+  const pageDescription =
+    pageDescriptionParts.length > 0
+      ? pageDescriptionParts.join(", ")
+      : "A busca pelo CEP não retornou resultados.";
 
   mixpanel.track("Cep Search", {
     cep: post?.cep,
