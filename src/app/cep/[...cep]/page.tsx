@@ -6,17 +6,12 @@ import { CepNotFound } from "@/components/cepNotFound/cepNotFound";
 import { CepResult } from "@/components/cepResult/cepResult";
 import { Header } from "@/components/header/header";
 
-interface CepProps {
-  params: {
-    cep: string;
-  };
-}
-
-export default async function New({ params }: CepProps) {
+export default async function New({ params }: any) {
+  const cep = params?.cep[0];
   const credentials = `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`;
   const base64Credentials = btoa(credentials);
 
-  const response = await fetch(`${process.env.API_LINK}/cep/${params.cep}`, {
+  const response = await fetch(`${process.env.API_LINK}/cep/${cep}`, {
     headers: {
       Authorization: `Basic ${base64Credentials}`,
     },
