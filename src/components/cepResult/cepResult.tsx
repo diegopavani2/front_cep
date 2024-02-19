@@ -1,7 +1,12 @@
 import { FunctionComponent } from "react";
 
 import "leaflet/dist/leaflet.css";
-import MapComponent from "../mapComponent/mapComponent";
+import dynamic from "next/dynamic";
+import axios from "axios";
+
+const MapWithNoSSR = dynamic(() => import("../mapComponent/mapComponent"), {
+  ssr: false,
+});
 
 interface propsCepResult {
   cep: string;
@@ -47,7 +52,7 @@ export const CepResult: FunctionComponent<propsCepResult> = ({
         style={{ height: "400px", width: "100%", overflow: "hidden" }}
         className="mt-4 bg-white rounded-lg shadow-md"
       >
-        <MapComponent
+        <MapWithNoSSR
           resultado={{
             latitude,
             longitude,
