@@ -1,8 +1,6 @@
 import { FunctionComponent } from "react";
 
-import "leaflet/dist/leaflet.css";
-import MapComponent from "../mapComponent/mapComponent";
-
+import MapWithoutSSR from "../mapComponent/mapWihoutSsr";
 interface propsCepResult {
   cep: string;
   logradouro: string;
@@ -47,7 +45,7 @@ export const CepResult: FunctionComponent<propsCepResult> = ({
         style={{ height: "400px", width: "100%", overflow: "hidden" }}
         className="mt-4 bg-white rounded-lg shadow-md"
       >
-        <MapComponent
+        <MapWithoutSSR
           resultado={{
             latitude,
             longitude,
