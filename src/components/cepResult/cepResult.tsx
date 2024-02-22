@@ -16,6 +16,7 @@ interface propsCepResult {
   estado: string;
   latitude: number;
   longitude: number;
+  tipoLogradouro: string;
 }
 
 export const CepResult: FunctionComponent<propsCepResult> = ({
@@ -26,6 +27,7 @@ export const CepResult: FunctionComponent<propsCepResult> = ({
   estado,
   latitude,
   longitude,
+  tipoLogradouro,
 }) => {
   return (
     <>
@@ -35,7 +37,7 @@ export const CepResult: FunctionComponent<propsCepResult> = ({
           <strong>CEP:</strong> {cep}
         </p>
         <p>
-          <strong>Logradouro:</strong> {logradouro}
+          <strong>Logradouro:</strong> {`${tipoLogradouro} ${logradouro}`}
         </p>
         <p>
           <strong>Bairro:</strong> {bairro}

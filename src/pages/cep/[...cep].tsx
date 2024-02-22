@@ -107,6 +107,7 @@ const CepPage: FunctionComponent<CepPageProps> = ({ post, cep }) => {
               estado={`${post.estado?.nome} - ${post.estado?.uf}`}
               latitude={post.latitude}
               longitude={post.longitude}
+              tipoLogradouro={post.tipoLogradouro}
             />
           )}
         </div>
